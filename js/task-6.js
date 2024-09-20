@@ -3,3 +3,39 @@ function getRandomHexColor() {
     .toString(16)
     .padStart(6, 0)}`;
 }
+
+const controls = document.querySelector('#controls');
+const input = controls.querySelector('input');
+const createBtn = controls.querySelector('button[data-create]');
+const destroyBtn = controls.querySelector('button[data-destroy]');
+const boxes = document.querySelector('#boxes');
+
+function createBoxes(amount) {
+  let size = 30;
+  let html = '';
+
+  for (let i = 0; i < amount; i++) {
+    html += `<div style="width: ${size}px; height: ${size}px; background-color: ${getRandomHexColor()}; margin: 5px;"></div>`;
+    size += 10;
+  }
+
+  boxes.insertAdjacentHTML('beforeend', html);
+}
+
+function destroyBoxes() {
+  boxes.innerHTML = '';
+}
+
+createBtn.addEventListener('click', () => {
+  const amount = parseInt(input.value.trim());
+
+  if (amount >= 1 && amount <= 100) {
+    createBoxes(amount);
+  } else {
+    alert('Please enter a number between 1 and 100.');
+  }
+
+  input.value = '';
+});
+
+destroyBtn.addEventListener('click', destroyBoxes);
